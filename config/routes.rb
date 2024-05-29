@@ -19,4 +19,10 @@ Rails.application.routes.draw do
 
     resources :inn_rooms, only: [:show, :edit, :update]
   end
+
+  namespace :api do
+    namespace :v1 do
+      get "/inn/:cnpj", to: 'inns#show_details'
+    end
+  end
 end
