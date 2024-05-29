@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe 'Inn API' do
+describe 'Inn API', :type => :request do
   context 'GET api/v1/inn/cnpj' do
     it 'return details from inn' do
       owner = InnOwner.create!(email: "vini@email.com", password: "password", first_name: "Vinícius", last_name: "Peruzzi", document: "01968717005")
@@ -14,7 +14,7 @@ describe 'Inn API' do
       InnRoom.create!(name: "Suíte Master", size: 90, guest_limit: 8, daily_rate_cents: 75000, inn_id: inn1.id)
       InnRoom.create!(name: "Vista para a lagoa", size: 35, guest_limit: 2, daily_rate_cents: 25000, inn_id: inn2.id)
 
-      get 'api/v1/inn/00245679870001'
+      get '/api/v1/inn/00245679870001'
 
       expect(response.status).to eq 200
       expect(response.content_type).to include "application/json"
@@ -28,6 +28,7 @@ describe 'Inn API' do
       expect(json_response["address"]["neighborhood"]).to eq 'Centro'
       expect(json_response["address"]["city"]).to eq 'Praia Alta'
       expect(json_response["address"]["state"]).to eq 'RS'
+      expect(json_response["qtd_rooms"]).to eq 2
     end
   end
 end
